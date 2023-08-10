@@ -2,14 +2,19 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { object, string } from 'yup';
 
-import { Alert, DescriptionList, FocusPageLayout, HeroTitle } from '../../../design-system';
+import {
+    Alert,
+    DescriptionListItem,
+    FocusPageLayout,
+    HeroTitle,
+} from '../../../design-system';
 import { IbanInput } from './IbanInput';
 import type { FormValues } from './ValidationFormService';
-import { useValidateIban } from './useValidateIban';
-import { ValidationStates } from './ValidationStates';
+import { useValidationPage } from './useValidationPage';
+import { ValidationResults } from './ValidationResults';
 
 export const ValidationPage = () => {
-    const { validate, ...result } = useValidateIban();
+    const model = useValidationPage();
     const methods = useForm<FormValues>({
         defaultValues: {
             iban: '',
@@ -25,15 +30,26 @@ export const ValidationPage = () => {
         <FocusPageLayout>
             <HeroTitle title="IBAN Validator" />
             <FormProvider {...methods}>
-                <form onSubmit={methods.handleSubmit(validate)} autoComplete="off">
+                <form onSubmit={methods.handleSubmit(model.validate)} autoComplete="off">
                     <IbanInput />
-                    {result.isInvalid && <Alert variant="error">This IBAN is invalid</Alert>}
+                    {model.isInvalid && (
+                        <Alert variant="error">This IBAN is invalid</Alert>
+                    )}
                 </form>
             </FormProvider>
-            {result.isValidationResultAvailable && (
+            {model.isAvailable && (
                 <>
-                    <ValidationStates states={result.states} />
-                    <DescriptionList items={[{ label: 'Formatted', text: result.formatted }]} />
+                    <ValidationResults results={model.results} />
+                    <Alert variant="info">
+                        <DescriptionListItem label="Formatted">
+                            <code data-test="iban-output">{model.formatted}</code>
+                        </DescriptionListItem>
+                        {model.currency && (
+                            <p data-test="iban-currency">
+                                {`+ This IBAN supports ${model.currency.code} currency`}
+                            </p>
+                        )}
+                    </Alert>
                 </>
             )}
         </FocusPageLayout>

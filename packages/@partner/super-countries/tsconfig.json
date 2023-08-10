@@ -1,11 +1,10 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "useDefineForClassFields": true,
     "lib": ["esnext", "DOM", "DOM.Iterable"],
     "module": "esnext",
     "skipLibCheck": true,
-    "types": ["cypress", "node" ,"src/types"],
+    "types": ["node"],
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -15,7 +14,6 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
 
     /* Linting */
     "strict": true,
@@ -24,5 +22,5 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true
   },
-  "include": ["src", "cypress"],
+  "include": ["index.ts"],
 }

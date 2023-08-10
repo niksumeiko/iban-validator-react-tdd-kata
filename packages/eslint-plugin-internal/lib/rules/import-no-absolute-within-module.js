@@ -6,7 +6,7 @@ const normalizeSep = (somePath = '') => somePath.split('\\').join('/');
 /**
  * This function returns the module group name
  * of a path:
- * @example getModuleGroupName('projects/my-app/packages/form/api/src/index.cjs') // returns formapi
+ * @example getModuleGroupName('projects/my-app/packages/form/adapters/src/index.cjs') // returns formapi
  * */
 
 const getModuleGroupName = (path) => {
@@ -50,8 +50,8 @@ module.exports = {
     /**
      * Pseudocode:
      * if importDeclaration is an absolute path
-     * where the source module (e.g. luna/api) is the same
-     * as the target module (e.g. luna/api) then report a linter error */
+     * where the source module (e.g. luna/adapters) is the same
+     * as the target module (e.g. luna/adapters) then report a linter error */
     create: function noAbsoluteWithinModules(context) {
         return {
             ImportDeclaration(node) {
@@ -84,7 +84,10 @@ module.exports = {
                     return;
                 }
 
-                const relDepPath = relative(dirname(context.getFilename()), targetImportPath);
+                const relDepPath = relative(
+                    dirname(context.getFilename()),
+                    targetImportPath,
+                );
                 const parsed = parse(relDepPath);
                 const relDepPathWithoutExtension = join(parsed.dir, parsed.name);
                 const isJSFile = ['.js', '.jsx', '.ts', '.tsx'].includes(parsed.ext);
@@ -100,7 +103,9 @@ module.exports = {
                             }
                             return fixer.replaceText(
                                 node.source,
-                                `'./${isJSFile ? relDepPathWithoutExtension : relDepPath}'`,
+                                `'./${
+                                    isJSFile ? relDepPathWithoutExtension : relDepPath
+                                }'`,
                             );
                         },
                     }),

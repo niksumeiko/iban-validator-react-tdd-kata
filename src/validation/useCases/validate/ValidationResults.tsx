@@ -1,11 +1,11 @@
 interface Props {
-    states: string[];
+    results: string[];
 }
 
-export const ValidationStates = ({ states }: Props) => (
+export const ValidationResults = ({ results }: Props) => (
     <ul className="my-8 divide-y divide-gray-100">
-        {states.map((state) => (
-            <li key={state} className="px-3 text-lg leading-10 odd:bg-gray-50">
+        {results.map((result) => (
+            <li key={result} className="px-3 text-lg leading-10 odd:bg-gray-50">
                 <svg
                     viewBox="0 0 32 32"
                     width="1.2em"
@@ -22,7 +22,7 @@ export const ValidationStates = ({ states }: Props) => (
                         d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12a12 12 0 0 1-12 12Z"
                     />
                 </svg>
-                <span className="pl-2">{state}</span>
+                <span className="pl-2">{result}</span>
             </li>
         ))}
     </ul>

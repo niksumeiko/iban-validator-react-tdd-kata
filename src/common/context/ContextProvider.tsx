@@ -1,20 +1,20 @@
 import type { FC, ReactNode } from 'react';
-import React, { memo, useMemo } from 'react';
+import { memo, useMemo } from 'react';
 
 import type { ProviderWithValue } from './createGenericContext';
 
 interface Props {
-    providers: MultiContextProviderType[];
+    providers: ContextProviderType[];
     children: ReactNode;
 }
 
 type FCWithChildren = FC<{ children: ReactNode }>;
 
-export type MultiContextProviderType = ProviderWithValue | FCWithChildren;
+export type ContextProviderType = ProviderWithValue | FCWithChildren;
 
 const ContextWrapper: FCWithChildren = memo(({ children }) => <>{children}</>);
 
-const composeProviders = (wrappers: MultiContextProviderType[]): FCWithChildren => {
+const composeProviders = (wrappers: ContextProviderType[]): FCWithChildren => {
     return wrappers.reduce<FCWithChildren>((Acc, Context): FCWithChildren => {
         const ContextWithValue = Context as ProviderWithValue;
         if (ContextWithValue?.defaultValue) {
@@ -38,7 +38,7 @@ const composeProviders = (wrappers: MultiContextProviderType[]): FCWithChildren 
  * Provides wrapper for providers, so they can be configured in 'flat' manner, and we
  * can avoid unnecessary nesting.
  */
-export const MultiContextProvider: FC<Props> = memo(({ providers, children }) => {
+export const ContextProvider: FC<Props> = memo(({ providers, children }) => {
     const ComposedProviders = useMemo(() => composeProviders(providers), [providers]);
 
     return <ComposedProviders>{children}</ComposedProviders>;

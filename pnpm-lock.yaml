@@ -11,6 +11,9 @@ dependencies:
   '@heroicons/react':
     specifier: ^2.0.18
     version: 2.0.18(react@18.2.0)
+  '@partner/super-countries':
+    specifier: file:packages/@partner/super-countries
+    version: file:packages/@partner/super-countries
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -91,12 +94,12 @@ devDependencies:
   eslint-plugin-cypress:
     specifier: ^2.13.3
     version: 2.13.3(eslint@8.45.0)
-  eslint-plugin-internal:
-    specifier: file:packages/eslint-plugin-internal
-    version: file:packages/eslint-plugin-internal
   eslint-plugin-import:
     specifier: ^2.28.0
     version: 2.28.0(@typescript-eslint/parser@6.0.0)(eslint-import-resolver-typescript@3.5.5)(eslint@8.45.0)
+  eslint-plugin-internal:
+    specifier: file:packages/eslint-plugin-internal
+    version: file:packages/eslint-plugin-internal
   eslint-plugin-prettier:
     specifier: ^5.0.0
     version: 5.0.0(eslint-config-prettier@8.9.0)(eslint@8.45.0)(prettier@3.0.0)
@@ -7168,7 +7171,7 @@ packages:
     dependencies:
       assert-plus: 1.0.0
       core-util-is: 1.0.2
-      extsprintf: 1.3.0
+      extsprintf: 1.4.1
     dev: true
 
   /verror@1.10.1:
@@ -7446,6 +7449,11 @@ packages:
       tiny-case: 1.0.3
       toposort: 2.0.2
       type-fest: 2.19.0
+    dev: false
+
+  file:packages/@partner/super-countries:
+    resolution: {directory: packages/@partner/super-countries, type: directory}
+    name: '@partner/super-countries'
     dev: false
 
   file:packages/eslint-plugin-internal:

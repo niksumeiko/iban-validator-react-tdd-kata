@@ -70,7 +70,7 @@ const IBANS = {
         bank: {
             trustScore: 10,
             name: 'British Business Bank',
-            address: { city: 'London', zip: 'EC2R', country: 'UK' },
+            address: { city: 'London', zip: 'EC2R', country: 'GB' },
         },
     },
     SA3245000000001123456001: {

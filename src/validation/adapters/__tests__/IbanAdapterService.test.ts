@@ -1,9 +1,9 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { createIbanValidationRequest } from '../IbanValidationService';
+import { createIbanValidationAdapter } from '../IbanAdapterService';
 
-describe('IbanValidationService', () => {
-    describe('api adapter', () => {
+describe('IbanAdapterService', () => {
+    describe('adapters adapter', () => {
         it('make request and return response', async () => {
             const inputProps = { iban: 'x' };
             const spy = vi.fn(() =>
@@ -18,7 +18,10 @@ describe('IbanValidationService', () => {
             );
             const requestOptions = { request: spy };
 
-            const result = await createIbanValidationRequest(inputProps, requestOptions)();
+            const result = await createIbanValidationAdapter(
+                inputProps,
+                requestOptions,
+            )();
 
             expect(spy).toHaveBeenCalledWith('http://localhost:9000/validate?iban=x', {
                 headers: {

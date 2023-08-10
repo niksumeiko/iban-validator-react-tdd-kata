@@ -87,7 +87,9 @@ function getProvider<T>(
  *
  * @param opts - options
  */
-export const buildContext = <T,>(opts?: CreateContextOptions): CreateGenericContextType<T> => {
+export const buildContext = <T,>(
+    opts?: CreateContextOptions,
+): CreateGenericContextType<T> => {
     const ctxName = opts?.contextName || 'unknown';
     // Create a context with a generic parameter or undefined
     const genericContext = React.createContext<ContextValue<T | undefined>>({
@@ -103,7 +105,9 @@ export const buildContext = <T,>(opts?: CreateContextOptions): CreateGenericCont
             return contextValue as ContextValue<T>;
         }
         if (!contextValue) {
-            throw new Error(`Context value '${ctxName}' must be set and within a Provider`);
+            throw new Error(
+                `Context value '${ctxName}' must be set and within a Provider`,
+            );
         }
         return contextValue as ContextValue<T>;
     };
