@@ -8,8 +8,9 @@ import { getValidationStates } from './ValidationStatesService';
 
 interface HookResult {
     validate(values: FormValues): void;
-    isLoading: boolean;
-    isValid: boolean;
+    isValidating: boolean;
+    isValidationResultAvailable: boolean;
+    isInvalid: boolean;
     formatted: string;
     states: string[];
 }
@@ -18,6 +19,7 @@ export function useValidateIban(): HookResult {
     const [iban, setIban] = useState('');
     const result = useQuery(['validation', iban], createIbanValidationRequest({ iban }), {
         enabled: Boolean(iban),
+        retry: false,
     });
 
     const validate = (values: FormValues) => {
@@ -26,8 +28,9 @@ export function useValidateIban(): HookResult {
 
     return {
         validate,
-        isLoading: result.isLoading,
-        isValid: result.isSuccess,
+        isValidating: result.isLoading,
+        isValidationResultAvailable: result.isSuccess,
+        isInvalid: result.isError,
         formatted: formatIban(iban),
         states: getValidationStates(result.data),
     };
