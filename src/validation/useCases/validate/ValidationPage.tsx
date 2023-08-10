@@ -1,4 +1,6 @@
 import { FormProvider, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { object, string } from 'yup';
 
 import { DescriptionList, FocusPageLayout, HeroTitle } from '../../../design-system';
 import { IbanInput } from './IbanInput';
@@ -12,6 +14,11 @@ export const ValidationPage = () => {
         defaultValues: {
             iban: '',
         },
+        resolver: yupResolver(
+            object({
+                iban: string().required('Please provide the IBAN'),
+            }),
+        ),
     });
 
     return (

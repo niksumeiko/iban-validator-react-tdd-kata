@@ -34,7 +34,7 @@ module.exports = cypress.defineConfig({
             framework: 'react',
             bundler: 'vite',
         },
-        specPattern: 'src/**/*.test.cy.tsx',
+        specPattern: 'src/**/*.test.tsx',
         viewportWidth: 1280,
         viewportHeight: 768,
     },

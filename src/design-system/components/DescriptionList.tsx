@@ -8,7 +8,7 @@ interface Props {
 }
 
 export const DescriptionList = ({ items }: Props) => (
-    <div role="alert" className="rounded border-s-4 border-blue-300/40 bg-sky-50 p-4">
+    <div className="rounded border-s-4 border-blue-300/40 bg-sky-50 p-4">
         <dl>
             {items.map(({ label, text }) => (
                 <Fragment key={text}>
