@@ -9,7 +9,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "api": "node api.cjs",
-    "test:unit": "vitest",
+    "test:unit": "vitest run",
     "test:unit:coverage": "vitest run --coverage",
     "test:integration": "cypress open --component --browser electron",
     "test:e2e": "cypress open --e2e --browser electron",

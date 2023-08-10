@@ -5,7 +5,7 @@ Given('I open a validation page', () => {
 });
 
 When('I provide an IBAN', () => {
-    cy.get('form [data-test="iban-entry"]').type('AT0309000000000019176655');
+    cy.get('form [data-test="iban-entry"]').type('AT0309000000000019176655{enter}');
 });
 
 Then('I see validation details', () => {
