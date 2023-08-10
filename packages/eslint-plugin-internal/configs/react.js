@@ -38,7 +38,7 @@ module.exports = {
         ],
         'react/jsx-props-no-spreading': [
             'warn',
-            { html: 'ignore', exceptions: ['FormProvider', 'TextInput'] },
+            { html: 'ignore', exceptions: ['FormProvider'] },
         ],
         'react/jsx-no-script-url': [
             'error',

@@ -5,7 +5,9 @@ export interface ApiError {
     message: string;
 }
 
-export async function getValidApiResponse<T>(response: Pick<Response, 'ok' | 'json'>): Promise<T> {
+export async function getValidApiResponse<T>(
+    response: Pick<Response, 'ok' | 'json'>,
+): Promise<T> {
     if (!response.ok) {
         throw await response.json();
     }
