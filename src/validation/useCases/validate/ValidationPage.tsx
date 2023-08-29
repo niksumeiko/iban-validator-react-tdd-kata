@@ -7,11 +7,11 @@ import {
     DescriptionListItem,
     FocusPageLayout,
     HeroTitle,
+    PositiveList,
 } from '../../../design-system';
 import { IbanInput } from './IbanInput';
 import type { FormValues } from './ValidationFormService';
 import { useValidationPage } from './useValidationPage';
-import { ValidationResults } from './ValidationResults';
 
 export const ValidationPage = () => {
     const model = useValidationPage();
@@ -39,7 +39,7 @@ export const ValidationPage = () => {
             </FormProvider>
             {model.isAvailable && (
                 <>
-                    <ValidationResults results={model.results} />
+                    <PositiveList items={model.results} />
                     <Alert variant="info">
                         <DescriptionListItem label="Formatted">
                             <code data-test="iban-output">{model.formatted}</code>

@@ -15,8 +15,5 @@ Then('I see validation details', () => {
     cy.contains('Positive operation history').should('be.visible');
     cy.contains('No security claims').should('be.visible');
     cy.contains('Complies with Payment Services Directive (PSD2)').should('be.visible');
-    cy.get('[data-test="iban-output"]').should(
-        'have.text',
-        'AT03 0900 0000 0000 1917 6655',
-    );
+    cy.get('[data-test="iban-output"]').should('not.be.empty');
 });

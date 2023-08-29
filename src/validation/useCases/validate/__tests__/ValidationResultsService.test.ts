@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { getValidationResults } from '../ValidationResultsService';
-import type { ValidationResultDto } from '../../../adapters/IbanAdapterService';
+import type { ValidationResultDto } from '../../../api/IbanValidationApiService';
 
 describe('ValidationResultsService', () => {
     describe('states retrieval', () => {

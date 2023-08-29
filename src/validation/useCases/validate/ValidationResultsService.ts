@@ -1,4 +1,4 @@
-import type { ValidationResultDto } from '../../adapters/IbanAdapterService';
+import type { ValidationResultDto } from '../../api/IbanValidationApiService';
 
 export function getValidationResults(result?: ValidationResultDto) {
     if (!result) {

@@ -1,10 +1,10 @@
 interface Props {
-    results: string[];
+    items: string[];
 }
 
-export const ValidationResults = ({ results }: Props) => (
+export const PositiveList = ({ items }: Props) => (
     <ul className="my-8 divide-y divide-gray-100">
-        {results.map((result) => (
+        {items.map((result) => (
             <li key={result} className="px-3 text-lg leading-10 odd:bg-gray-50">
                 <svg
                     viewBox="0 0 32 32"
