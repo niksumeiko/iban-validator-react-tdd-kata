@@ -11,6 +11,7 @@ import {
     TextInput,
 } from '../../../design-system';
 import { createIbanValidationApiAdapter } from '../../api/ValidationApiService';
+import { createIbanValidationViewModel } from './ValidationViewModelService';
 
 export const ValidationPage = () => {
     const [formValues, setFormValues] = useState({ iban: '' });
@@ -23,14 +24,18 @@ export const ValidationPage = () => {
             retry: false,
         },
     );
+    const model = createIbanValidationViewModel(data);
 
     return (
         <FocusPageLayout>
             <HeroTitle title="IBAN Validator" />
-            <form onSubmit={(event) => {
-                setIban(formValues.iban);
-                event.preventDefault();
-            }} autoComplete="off">
+            <form
+                onSubmit={(event) => {
+                    setIban(formValues.iban);
+                    event.preventDefault();
+                }}
+                autoComplete="off"
+            >
                 <FormField
                     button={
                         <Button type="submit">
@@ -42,13 +47,15 @@ export const ValidationPage = () => {
                         data-test="iban-entry"
                         placeholder="Type IBAN…"
                         onChange={(event) => {
-                            setFormValues({iban: event.target.value})
+                            setFormValues({ iban: event.target.value });
                         }}
                     />
                 </FormField>
             </form>
-            {/* IF data is available */ && (
-                <PositiveList items={/* data transformed into string[] */['x', 'y', 'z']} />
+            {model.isValidationAvailable && (
+                <PositiveList
+                    items={/* data transformed into string[] */ ['x', 'y', 'z']}
+                />
             )}
         </FocusPageLayout>
     );
