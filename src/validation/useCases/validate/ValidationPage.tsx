@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+
 import {
     Button,
     FocusPageLayout,
@@ -7,12 +10,27 @@ import {
     PositiveList,
     TextInput,
 } from '../../../design-system';
+import { createIbanValidationApiAdapter } from '../../api/ValidationApiService';
 
 export const ValidationPage = () => {
+    const [formValues, setFormValues] = useState({ iban: '' });
+    const [iban, setIban] = useState(formValues.iban);
+    const { data } = useQuery(
+        ['validation', iban],
+        createIbanValidationApiAdapter(iban),
+        {
+            enabled: Boolean(iban),
+            retry: false,
+        },
+    );
+
     return (
         <FocusPageLayout>
             <HeroTitle title="IBAN Validator" />
-            <form autoComplete="off">
+            <form onSubmit={(event) => {
+                setIban(formValues.iban);
+                event.preventDefault();
+            }} autoComplete="off">
                 <FormField
                     button={
                         <Button type="submit">
@@ -20,10 +38,18 @@ export const ValidationPage = () => {
                         </Button>
                     }
                 >
-                    <TextInput data-test="iban-entry" placeholder="Type IBAN…" />
+                    <TextInput
+                        data-test="iban-entry"
+                        placeholder="Type IBAN…"
+                        onChange={(event) => {
+                            setFormValues({iban: event.target.value})
+                        }}
+                    />
                 </FormField>
             </form>
-            <PositiveList items={['x', 'y', 'z']} />
+            {/* IF data is available */ && (
+                <PositiveList items={/* data transformed into string[] */['x', 'y', 'z']} />
+            )}
         </FocusPageLayout>
     );
 };
