@@ -1,32 +1,41 @@
 import type { ValidationResponse } from '../../api/ValidationApiService';
 
-export function createIbanValidationViewModel(validation?: ValidationResponse) {
-    const results = [];
-
-    if (validation) {
-        results.push('Valid IBAN');
+function hasTrustedBank(bank: ValidationResponse['bank']): boolean {
+    if (typeof bank?.trustScore !== 'number') {
+        return false;
     }
 
-    if (
-        typeof validation?.bank?.trustScore === 'number' &&
-        validation?.bank?.trustScore > 7
-    ) {
+    return bank.trustScore > 7;
+}
+
+export function createIbanValidationViewModel(validation?: ValidationResponse) {
+    if (!validation) {
+        return {
+            validationResults: [],
+            isValidationAvailable: false,
+        };
+    }
+
+    const results = ['Valid IBAN'];
+    const { bank, flags } = validation;
+
+    if (hasTrustedBank(bank)) {
         results.push('Trusted bank');
     }
 
-    if (validation?.flags.includes('INSTANT')) {
+    if (flags.includes('INSTANT')) {
         results.push('Accepts instant payments');
     }
 
-    if (validation?.flags.includes('POSITIVE_HISTORY')) {
+    if (flags.includes('POSITIVE_HISTORY')) {
         results.push('Positive operation history');
     }
 
-    if (validation && !validation?.flags.includes('SECURITY_CLAIMS')) {
+    if (!flags.includes('SECURITY_CLAIMS')) {
         results.push('No security claims');
     }
 
-    if (validation?.flags.includes('PSD2')) {
+    if (flags.includes('PSD2')) {
         results.push('Complies with Payment Services Directive (PSD2)');
     }
 
