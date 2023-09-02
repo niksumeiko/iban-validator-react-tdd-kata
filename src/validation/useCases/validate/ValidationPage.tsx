@@ -53,9 +53,7 @@ export const ValidationPage = () => {
                 </FormField>
             </form>
             {model.isValidationAvailable && (
-                <PositiveList
-                    items={/* data transformed into string[] */ ['x', 'y', 'z']}
-                />
+                <PositiveList items={model.validationResults} />
             )}
         </FocusPageLayout>
     );
