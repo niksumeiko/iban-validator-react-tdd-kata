@@ -10,10 +10,11 @@ import {
     PositiveList,
     TextInput,
 } from '../../../design-system';
-import { createIbanValidationApiAdapter } from '../../api/ValidationApiService';
+import { useValidationAdapterFactory } from '../../api/ValidationApiProvider';
 import { createIbanValidationViewModel } from './ValidationViewModelService';
 
 export const ValidationPage = () => {
+    const createIbanValidationApiAdapter = useValidationAdapterFactory();
     const [formValues, setFormValues] = useState({ iban: '' });
     const [iban, setIban] = useState(formValues.iban);
     const { data } = useQuery(
