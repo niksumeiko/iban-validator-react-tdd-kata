@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
 
 import {
     Button,
@@ -10,21 +9,13 @@ import {
     PositiveList,
     TextInput,
 } from '../../../design-system';
-import { useValidationAdapterFactory } from '../../api/ValidationApiProvider';
 import { createIbanValidationViewModel } from './ValidationViewModelService';
+import { useIban } from './useIban';
 
 export const ValidationPage = () => {
-    const createIbanValidationApiAdapter = useValidationAdapterFactory();
     const [formValues, setFormValues] = useState({ iban: '' });
     const [iban, setIban] = useState(formValues.iban);
-    const { data, error } = useQuery(
-        ['validation', iban],
-        createIbanValidationApiAdapter(iban),
-        {
-            enabled: Boolean(iban),
-            retry: false,
-        },
-    );
+    const { data, error } = useIban(iban);
     const model = createIbanValidationViewModel(data, error);
 
     return (
