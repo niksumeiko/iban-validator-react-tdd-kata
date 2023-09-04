@@ -8,9 +8,23 @@ function hasTrustedBank(bank: ValidationResponse['bank']): boolean {
     return bank.trustScore > 7;
 }
 
-export function createIbanValidationViewModel(validation?: ValidationResponse) {
+function getValidationError(error?: unknown) {
+    if (!error) {
+        return undefined;
+    }
+
+    return 'This IBAN is invalid';
+}
+
+export function createIbanValidationViewModel(
+    validation?: ValidationResponse,
+    error?: unknown,
+) {
+    const validationError = getValidationError(error);
+
     if (!validation) {
         return {
+            validationError,
             validationResults: [],
             isValidationAvailable: false,
         };
@@ -40,6 +54,7 @@ export function createIbanValidationViewModel(validation?: ValidationResponse) {
     }
 
     return {
+        validationError,
         validationResults: results,
         isValidationAvailable: Boolean(validation),
     };

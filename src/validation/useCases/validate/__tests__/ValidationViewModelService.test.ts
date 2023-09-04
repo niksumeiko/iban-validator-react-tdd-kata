@@ -118,4 +118,24 @@ describe('validation view model retrieval', () => {
             ]);
         });
     });
+
+    describe('validation error', () => {
+        it('returns error message when iban is invalid', () => {
+            const validation = undefined;
+            const error = new Error();
+
+            const result = createIbanValidationViewModel(validation, error);
+
+            expect(result.validationError).toBe('This IBAN is invalid');
+        });
+
+        it('returns undefined when iban is valid', () => {
+            const validation = { iban: 'x', flags: [] };
+            const error = undefined;
+
+            const result = createIbanValidationViewModel(validation, error);
+
+            expect(result.validationError).toBeUndefined();
+        });
+    });
 });
