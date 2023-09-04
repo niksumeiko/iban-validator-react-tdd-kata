@@ -17,7 +17,7 @@ export const ValidationPage = () => {
     const createIbanValidationApiAdapter = useValidationAdapterFactory();
     const [formValues, setFormValues] = useState({ iban: '' });
     const [iban, setIban] = useState(formValues.iban);
-    const { data } = useQuery(
+    const { data, error } = useQuery(
         ['validation', iban],
         createIbanValidationApiAdapter(iban),
         {
@@ -25,7 +25,7 @@ export const ValidationPage = () => {
             retry: false,
         },
     );
-    const model = createIbanValidationViewModel(data);
+    const model = createIbanValidationViewModel(data, error);
 
     return (
         <FocusPageLayout>
@@ -38,6 +38,7 @@ export const ValidationPage = () => {
                 autoComplete="off"
             >
                 <FormField
+                    error={model.validationError}
                     button={
                         <Button type="submit">
                             <MagnifyingGlassIcon />
