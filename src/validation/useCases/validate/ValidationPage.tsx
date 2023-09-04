@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import {
     Button,
     FocusPageLayout,
@@ -9,27 +7,23 @@ import {
     PositiveList,
     TextInput,
 } from '../../../design-system';
-import { createIbanValidationViewModel } from './ValidationViewModelService';
-import { useIban } from './useIban';
+import { useIbanValidation } from './useIbanValidation';
 
 export const ValidationPage = () => {
-    const [formValues, setFormValues] = useState({ iban: '' });
-    const [iban, setIban] = useState(formValues.iban);
-    const { data, error } = useIban(iban);
-    const model = createIbanValidationViewModel(data, error);
+    const {
+        isValidationAvailable,
+        onIbanChange,
+        onIbanSubmit,
+        validationError,
+        validationResults,
+    } = useIbanValidation();
 
     return (
         <FocusPageLayout>
             <HeroTitle title="IBAN Validator" />
-            <form
-                onSubmit={(event) => {
-                    setIban(formValues.iban);
-                    event.preventDefault();
-                }}
-                autoComplete="off"
-            >
+            <form onSubmit={onIbanSubmit} autoComplete="off">
                 <FormField
-                    error={model.validationError}
+                    error={validationError}
                     button={
                         <Button type="submit">
                             <MagnifyingGlassIcon />
@@ -39,15 +33,11 @@ export const ValidationPage = () => {
                     <TextInput
                         data-test="iban-entry"
                         placeholder="Type IBAN…"
-                        onChange={(event) => {
-                            setFormValues({ iban: event.target.value });
-                        }}
+                        onChange={onIbanChange}
                     />
                 </FormField>
             </form>
-            {model.isValidationAvailable && (
-                <PositiveList items={model.validationResults} />
-            )}
+            {isValidationAvailable && <PositiveList items={validationResults} />}
         </FocusPageLayout>
     );
 };
