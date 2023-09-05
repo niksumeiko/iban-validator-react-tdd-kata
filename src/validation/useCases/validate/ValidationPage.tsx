@@ -1,13 +1,6 @@
-import {
-    Button,
-    FocusPageLayout,
-    FormField,
-    HeroTitle,
-    MagnifyingGlassIcon,
-    PositiveList,
-    TextInput,
-} from '../../../design-system';
+import { FocusPageLayout, HeroTitle, PositiveList } from '../../../design-system';
 import { useIbanValidation } from './useIbanValidation';
+import { IbanInputField } from './IbanInputField';
 
 export const ValidationPage = () => {
     const {
@@ -22,20 +15,7 @@ export const ValidationPage = () => {
         <FocusPageLayout>
             <HeroTitle title="IBAN Validator" />
             <form onSubmit={onIbanSubmit} autoComplete="off">
-                <FormField
-                    error={validationError}
-                    button={
-                        <Button type="submit">
-                            <MagnifyingGlassIcon />
-                        </Button>
-                    }
-                >
-                    <TextInput
-                        data-test="iban-entry"
-                        placeholder="Type IBAN…"
-                        onChange={onIbanChange}
-                    />
-                </FormField>
+                <IbanInputField error={validationError} onChange={onIbanChange} />
             </form>
             {isValidationAvailable && <PositiveList items={validationResults} />}
         </FocusPageLayout>
