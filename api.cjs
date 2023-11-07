@@ -2,7 +2,7 @@ const http = require('http');
 const { URL } = require('url');
 require('dotenv').config();
 
-const PORT = process.env.VITE_APP_PORT;
+const PORT = process.env.APP_PORT;
 
 function getRandomDelay() {
     return (Math.floor(Math.random() * 2) + 1) * 1000;

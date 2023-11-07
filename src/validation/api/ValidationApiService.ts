@@ -1,4 +1,4 @@
-const apiUrl = import.meta.env.VITE_API_URL;
+const apiUrl = process.env.API_URL;
 
 export type ValidationResponse = {
     iban: string;

@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 
 import { createIbanValidationApiAdapter } from '../ValidationApiService';
-const apiUrl = import.meta.env.VITE_API_URL;
+const apiUrl = process.env.API_URL;
 
 describe('api adapter factory', () => {
     it('returns successful response for provided iban', async () => {
