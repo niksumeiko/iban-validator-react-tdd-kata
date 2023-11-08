@@ -1,5 +1,8 @@
 const http = require('http');
 const { URL } = require('url');
+require('dotenv').config();
+
+const PORT = process.env.APP_PORT;
 
 function getRandomDelay() {
     return (Math.floor(Math.random() * 2) + 1) * 1000;
@@ -35,7 +38,12 @@ const IBANS = {
         bank: {
             trustScore: 9,
             name: 'Erste Bank',
-            address: { street: 'Am Belvedere 1', city: 'Vienna', zip: '1100', country: 'AT' },
+            address: {
+                street: 'Am Belvedere 1',
+                city: 'Vienna',
+                zip: '1100',
+                country: 'AT',
+            },
         },
     },
     RO23INGB0001000000000222: {
@@ -85,27 +93,44 @@ const IBANS = {
 function handleValidateEndpoint(req, res) {
     const { searchParams } = getRequestUrl(req);
     const iban = searchParams.get('iban')?.toUpperCase();
-
     delayResponse().then(() => {
         if (!iban) {
-            return writeErrors(res, [{
-                scope: 'iban',
-                message: 'Missing iban',
-            }], 400);
+            return writeErrors(
+                res,
+                [
+                    {
+                        scope: 'iban',
+                        message: 'Missing iban',
+                    },
+                ],
+                400,
+            );
         }
 
         if (IBANS[iban] === null) {
-            return writeErrors(res, [{
-                scope: 'iban',
-                message: 'Invalid iban',
-            }], 400);
+            return writeErrors(
+                res,
+                [
+                    {
+                        scope: 'iban',
+                        message: 'Invalid iban',
+                    },
+                ],
+                400,
+            );
         }
 
         if (!IBANS[iban]) {
-            return writeErrors(res, [{
-                scope: 'iban',
-                message: 'Unknown iban',
-            }], 404);
+            return writeErrors(
+                res,
+                [
+                    {
+                        scope: 'iban',
+                        message: 'Unknown iban',
+                    },
+                ],
+                404,
+            );
         }
 
         return writeSuccess(res, {
@@ -134,5 +159,5 @@ http.createServer((req, res) => {
         }
     }
 
-    writeErrors(res, [{ message: 'Not found' }], 404)
-}).listen(9000, () => console.info('API ready/started'));
+    writeErrors(res, [{ message: 'Not found' }], 404);
+}).listen(PORT, () => console.info('API ready/started'));

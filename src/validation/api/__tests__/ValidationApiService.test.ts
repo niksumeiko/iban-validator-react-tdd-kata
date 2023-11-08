@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 
 import { createIbanValidationApiAdapter } from '../ValidationApiService';
+const apiUrl = process.env.API_URL;
 
 describe('api adapter factory', () => {
     it('returns successful response for provided iban', async () => {
@@ -14,7 +15,7 @@ describe('api adapter factory', () => {
         const result = await adapter();
 
         expect(result).toEqual({ iban: 'x', flags: [] });
-        expect(spy).toHaveBeenCalledWith('http://localhost:9000/validate?iban=x', {
+        expect(spy).toHaveBeenCalledWith(`${apiUrl}/validate?iban=x`, {
             headers: { 'Content-Type': 'application/json' },
         });
     });

@@ -1,3 +1,5 @@
+const apiUrl = process.env.API_URL;
+
 export type ValidationResponse = {
     iban: string;
     flags: ('INSTANT' | 'POSITIVE_HISTORY' | 'SECURITY_CLAIMS' | 'PSD2')[];
@@ -15,7 +17,7 @@ export function createIbanValidationApiAdapter(
     { request = window.fetch }: AdapterOptions = {},
 ) {
     return async (): Promise<ValidationResponse> => {
-        const response = await request(`http://localhost:9000/validate?iban=${iban}`, {
+        const response = await request(`${apiUrl}/validate?iban=${iban}`, {
             headers: { 'Content-Type': 'application/json' },
         });
         const result = await response.json();
